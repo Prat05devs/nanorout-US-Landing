@@ -1,0 +1,451 @@
+/* ==========================================================================
+   9.1 Header
+   ========================================================================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: var(--black);
+  transition:
+    transform 0.4s var(--ease-out),
+    background-color 0.3s;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--rule);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.6s var(--ease-out);
+}
+.scrolled::after {
+  transform: scaleX(1);
+}
+.hidden {
+  transform: translateY(-100%);
+}
+.open {
+  background: transparent;
+  transform: none;
+}
+.open::after {
+  transform: scaleX(0);
+}
+.bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.open .logo {
+  color: var(--black);
+  --line: var(--black);
+}
+.logo {
+  transition: color 0.3s;
+}
+
+.menuBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 20px;
+  background: var(--orange);
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s var(--ease-out);
+}
+.menuBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--acid);
+  transform: translateY(101%);
+  transition: transform 0.3s var(--ease-out);
+}
+.menuWord {
+  display: inline-grid;
+  overflow: hidden;
+}
+.menuWord span {
+  grid-area: 1 / 1;
+  transition: transform 0.45s var(--ease-out);
+}
+.menuWord span:last-child {
+  transform: translateY(110%);
+}
+.plus {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.45s var(--ease-in-out);
+}
+.plus path {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+@media (hover: hover) {
+  .menuBtn:hover {
+    color: var(--black);
+  }
+  .menuBtn:hover::before {
+    transform: none;
+  }
+  .menuBtn:hover .plus {
+    transform: rotate(90deg);
+  }
+}
+.menuBtn[aria-expanded="true"] {
+  background: var(--black);
+  color: var(--white);
+}
+@media (hover: hover) {
+  .menuBtn[aria-expanded="true"]:hover {
+    color: var(--black);
+  }
+}
+.menuBtn[aria-expanded="true"] .plus {
+  transform: rotate(45deg);
+}
+.menuBtn[aria-expanded="true"] .menuWord span:first-child {
+  transform: translateY(-110%);
+}
+.menuBtn[aria-expanded="true"] .menuWord span:last-child {
+  transform: none;
+}
+
+/* desktop: the side panel carries the logo; the header is just the floating MENU button */
+@media (min-width: 1024px) {
+  .header {
+    left: var(--side-w);
+    height: auto;
+    background: transparent;
+    pointer-events: none;
+    padding-top: 24px;
+  }
+  .header::after {
+    display: none;
+  }
+  .hidden {
+    transform: none;
+  }
+  .bar {
+    justify-content: flex-end;
+  }
+  .header .logo {
+    position: fixed;
+    left: 80px;
+    top: 40px;
+    visibility: hidden;
+  }
+  .open .logo {
+    visibility: visible;
+  }
+  .menuBtn {
+    pointer-events: auto;
+    height: 48px;
+    box-shadow: 0 0 0 0 rgb(255 106 0 / 0);
+    transition:
+      color 0.3s var(--ease-out),
+      box-shadow 0.4s var(--ease-out);
+  }
+  .menuBtn:hover {
+    box-shadow: 0 0 32px rgb(215 255 0 / 0.35);
+  }
+}
+
+/* ==========================================================================
+   9.2 – 9.4 Menu overlay
+   ========================================================================== */
+.overlay {
+  --fs: clamp(1.15rem, 3.4vw, 3rem);
+  --line: var(--black);
+  --art-bg: var(--orange);
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--orange);
+  color: var(--black);
+  visibility: hidden;
+  overflow: hidden;
+  clip-path: circle(0px at 100% 0%);
+}
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M0 .5H72M.5 0V72' stroke='%23111111' stroke-opacity='.12'/%3E%3C/svg%3E");
+}
+.plusMark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+.plusMark::before,
+.plusMark::after {
+  content: "";
+  position: absolute;
+  background: var(--black);
+}
+.plusMark::before {
+  left: 4.25px;
+  top: 0;
+  width: 1.5px;
+  height: 10px;
+}
+.plusMark::after {
+  top: 4.25px;
+  left: 0;
+  height: 1.5px;
+  width: 10px;
+}
+
+.drawA,
+.drawB,
+.drawC {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+}
+.drawA {
+  right: 4%;
+  top: 5%;
+  width: min(30vw, 520px);
+}
+.drawB {
+  right: 8%;
+  top: 40%;
+  width: min(26vw, 400px);
+}
+.drawC {
+  right: -4%;
+  bottom: -14%;
+  width: min(40vw, 640px);
+}
+.drawB :global(.lit) {
+  fill: var(--black);
+}
+
+.doodle {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+.doodle svg {
+  transition: transform 0.5s var(--ease-out);
+}
+.doodle[data-anchored] {
+  top: calc(140px + (var(--row) + 0.5) * (1.7 * var(--fs) + 4px) - 24px);
+  left: calc(80px + var(--fs) * (var(--chars) * 0.7 + 1.94) + 24px + var(--dx));
+}
+.doodle :global(.doodle-num) {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1;
+}
+@media (hover: hover) {
+  .doodle:hover svg {
+    transform: rotate(-12deg) scale(1.15);
+  }
+}
+
+.nav {
+  position: absolute;
+  left: 80px;
+  top: 140px;
+  right: 80px;
+  z-index: 2;
+}
+.items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.li {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  padding: 0.25em 0.5em;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: left;
+  text-wrap: balance;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.3s var(--ease-out);
+}
+/* an acid wipe chases the cursor across the box */
+.item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--acid);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.5s var(--ease-in-out);
+}
+.num {
+  font-size: 0.45em;
+  margin-right: 0.8em;
+  align-self: flex-start;
+  padding-top: 0.35em;
+}
+.itemArrow {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-width 0.3s var(--ease-out),
+    opacity 0.3s var(--ease-out),
+    margin 0.3s var(--ease-out);
+}
+.current {
+  background: var(--white);
+  color: var(--black);
+}
+.current::before {
+  background: var(--black);
+}
+@media (hover: hover) {
+  .item:hover {
+    transform: translateX(12px);
+    color: var(--black);
+  }
+  .item:hover::before {
+    transform: scaleX(1);
+  }
+  .current:hover {
+    color: var(--white);
+  }
+  .item:hover .itemArrow {
+    max-width: 1.2em;
+    opacity: 1;
+    margin-left: 0.5em;
+  }
+}
+.item {
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s 0.1s;
+}
+
+.notice {
+  position: absolute;
+  left: calc(100% + 16px);
+  top: 50%;
+  translate: 0 -50%;
+  white-space: nowrap;
+  padding: 6px 10px;
+  background: var(--black);
+  color: var(--white);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.bottom {
+  position: absolute;
+  left: 80px;
+  bottom: 40px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+/* a red backing keeps the labels readable where they cross the wafer */
+.bottom a {
+  position: relative;
+  padding: 2px 6px;
+  margin: -2px -6px;
+  background: var(--orange);
+}
+.bottom a::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.4s var(--ease-in-out);
+}
+@media (hover: hover) {
+  .bottom a:hover::after {
+    transform: scaleX(1);
+    transform-origin: 0 50%;
+  }
+}
+
+@media (max-width: 639px) {
+  .nav {
+    left: 24px;
+    right: 24px;
+    top: 96px;
+  }
+  .items {
+    gap: 6px;
+  }
+  .bottom {
+    left: 24px;
+    bottom: 24px;
+    right: 24px;
+  }
+  .notice {
+    left: 0;
+    top: calc(100% + 4px);
+    translate: none;
+    z-index: 3;
+  }
+  .drawA {
+    width: 70vw;
+    right: -6vw;
+    top: 64px;
+  }
+  .drawB {
+    width: 60vw;
+    right: 0;
+    top: 46%;
+  }
+  .drawC {
+    width: 130vw;
+    left: -15vw;
+    right: auto;
+    bottom: -20vw;
+  }
+  .doodle:not([data-mobile]) {
+    display: none;
+  }
+  .doodle[data-anchored] {
+    top: calc(96px + (var(--row) + 0.5) * (1.7 * var(--fs) + 6px) - 24px);
+    left: calc(24px + var(--fs) * (var(--chars) * 0.7 + 1.94) + 24px + var(--dx) * 0.5);
+  }
+}

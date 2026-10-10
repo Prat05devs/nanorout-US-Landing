@@ -1,0 +1,153 @@
+.headline {
+  margin: 0 auto;
+  max-width: 11em;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4.4vw, 4rem);
+  line-height: 1.32;
+  text-wrap: balance;
+}
+
+.formWrap {
+  position: relative;
+  max-width: 1000px;
+  margin: 64px auto 0;
+}
+.sentence {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 2.3rem);
+  line-height: 1.8;
+}
+
+.field {
+  position: relative;
+  display: inline-grid;
+  vertical-align: baseline;
+  min-width: 12ch;
+}
+.field::after {
+  content: attr(data-value) " ";
+  visibility: hidden;
+  white-space: pre;
+  grid-area: 1 / 1;
+  padding: 0 0.1em;
+}
+.input,
+.select {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0 0.1em;
+  font: inherit;
+  line-height: 1.15;
+  color: var(--white);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--white);
+  transition: box-shadow 0.3s var(--ease-out);
+}
+.input::placeholder {
+  color: var(--white);
+  opacity: 1;
+  font-style: italic;
+}
+.input:hover,
+.select:hover {
+  box-shadow: inset 0 -3px 0 var(--acid);
+}
+.input:focus,
+.select:focus,
+.invalid .input {
+  box-shadow: inset 0 -4px 0 var(--acid);
+}
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 3px;
+}
+
+.selectField {
+  min-width: 0;
+}
+.selectField::after {
+  display: none;
+}
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 1.1em;
+  cursor: pointer;
+  width: auto;
+}
+.caret {
+  color: var(--acid);
+}
+.select option {
+  color: var(--black);
+  background: var(--white);
+}
+.caret {
+  position: absolute;
+  right: 0.1em;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 0.5em;
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-out);
+}
+.selectField:hover .caret {
+  transform: translateY(3px);
+}
+.purpose {
+  transition: opacity 0.2s;
+}
+.fading {
+  opacity: 0;
+}
+
+.error {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 2;
+  padding: 4px 8px;
+  background: var(--acid);
+  color: var(--black);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.send {
+  margin-top: 40px;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.successLine {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 2.3rem);
+  line-height: 1.3;
+}
+.successLine svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+.successLine path {
+  fill: none;
+  stroke: var(--acid);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

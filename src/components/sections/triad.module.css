@@ -1,0 +1,174 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.head h2 {
+  margin-top: 0;
+}
+.head p {
+  max-width: 600px;
+  margin-top: 24px;
+  text-wrap: balance;
+}
+
+.wrapper {
+  --D: min(34vw, 440px);
+  position: relative;
+  height: 220svh;
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.group {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translateY(calc(var(--D) * -0.08));
+}
+
+.disc,
+.outline {
+  position: absolute;
+  left: calc(var(--D) / -2);
+  top: calc(var(--D) / -2);
+  width: var(--D);
+  height: var(--D);
+  border-radius: 50%;
+}
+.disc {
+  background: var(--white);
+  overflow: hidden;
+  transition: scale 0.6s var(--ease-out);
+}
+/* the three disciplines in the board's three bright colours */
+.d0 {
+  background: var(--acid);
+  --art-bg: var(--acid);
+}
+.d1 {
+  background: var(--orange);
+  --art-bg: var(--orange);
+}
+.d2 {
+  background: var(--white);
+  --art-bg: var(--white);
+}
+.disc svg {
+  width: 100%;
+  height: 100%;
+}
+.outline {
+  border: 1.5px solid var(--black);
+  pointer-events: none;
+  transition: scale 0.6s var(--ease-out);
+}
+@media (hover: hover) {
+  .disc.hot,
+  .outline.hot {
+    scale: 1.04;
+  }
+}
+
+.label {
+  position: absolute;
+  padding: 6px 10px;
+  background: var(--black);
+  color: var(--white);
+  border: 1.5px solid var(--black);
+  white-space: nowrap;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+/* each label wears its disc's colour, like a legend */
+.l0 {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--black);
+}
+.l1 {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--black);
+}
+.l2 {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+.label.labelHot {
+  background: var(--black);
+  color: var(--white);
+}
+.l0 {
+  right: 80%;
+  bottom: 86%;
+}
+.l1 {
+  left: 80%;
+  bottom: 86%;
+}
+.l2 {
+  left: 50%;
+  top: calc(100% + 14px);
+  translate: -50% 0;
+}
+
+.centre {
+  position: absolute;
+  left: -36px;
+  top: -36px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--black);
+  box-shadow: 0 0 0 1.5px var(--black), 0 0 32px rgb(215 255 0 / 0.35);
+  display: grid;
+  place-items: center;
+  z-index: 5;
+}
+.centre svg {
+  --line: var(--acid);
+  width: 56px;
+  height: 56px;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
+}
+
+@media (max-width: 1023px) {
+  .wrapper {
+    --D: min(58vw, 300px);
+    height: auto;
+  }
+  .sticky {
+    position: relative;
+    height: calc(var(--D) * 1.85 + 72px);
+  }
+  .group {
+    top: calc(var(--D) * 0.95 + 40px);
+  }
+  .label {
+    font-size: 11px;
+  }
+  .l0 {
+    right: auto;
+    left: -4%;
+    bottom: 100%;
+  }
+  .l1 {
+    left: auto;
+    right: -4%;
+    bottom: 100%;
+  }
+}

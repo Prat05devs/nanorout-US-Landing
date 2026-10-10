@@ -1,0 +1,206 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.head h2 {
+  margin-top: 0;
+}
+.head .para {
+  max-width: 540px;
+  margin-top: 24px;
+  text-wrap: balance;
+}
+
+.list {
+  margin-top: 64px;
+  position: relative;
+}
+.rule {
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1.2fr 1fr 96px 48px;
+  align-items: center;
+  min-height: 144px;
+  padding: 0 24px;
+  isolation: isolate;
+  transition: color 0.35s var(--ease-out);
+}
+/* acid wipe from the left */
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--acid);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.55s var(--ease-in-out);
+}
+
+.num {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  display: inline-grid;
+  overflow: hidden;
+  height: 1.3em;
+}
+.num span {
+  grid-area: 1 / 1;
+  transition: transform 0.45s var(--ease-out);
+}
+.num span:last-child {
+  transform: translateY(110%);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  /* "Brain-Computer Interface" is 16em wide: two balanced lines in the title column */
+  font-size: clamp(1.1rem, 1.75vw, 1.6rem);
+  line-height: 1.38;
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+  transition:
+    letter-spacing 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+.line {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+
+.card {
+  justify-self: center;
+  width: 72px;
+  height: 72px;
+  background: var(--white);
+  --line: var(--black);
+  --art-bg: var(--white);
+  transition:
+    background-color 0.35s,
+    transform 0.6s var(--ease-out);
+}
+.card svg {
+  width: 72px;
+  height: 72px;
+}
+
+.arrow {
+  justify-self: end;
+  font-size: 24px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
+}
+
+.row:active {
+  color: var(--black);
+}
+.row:active::before {
+  transform: scaleX(1);
+}
+@media (hover: hover) {
+  .row:hover {
+    color: var(--black);
+  }
+  .row:hover::before {
+    transform: scaleX(1);
+  }
+  .row:hover .num span:first-child {
+    transform: translateY(-110%);
+  }
+  .row:hover .num span:last-child {
+    transform: none;
+  }
+  .row:hover .title {
+    letter-spacing: 0.02em;
+    transform: translateX(8px);
+  }
+  .row:hover .card {
+    background: var(--black);
+    --line: var(--acid);
+    --art-bg: var(--black);
+    transform: rotate(-4deg) scale(1.06);
+  }
+  .row:hover .arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+/* tablet: two-line rows (title and one-liner stacked) */
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: 64px 1fr 96px 40px;
+    grid-template-areas: "num title card arrow" "num line card arrow";
+    row-gap: 8px;
+    padding-block: 28px;
+  }
+  .num {
+    grid-area: num;
+    align-self: start;
+    margin-top: 0.6em;
+  }
+  .title {
+    grid-area: title;
+  }
+  .line {
+    grid-area: line;
+  }
+  .card {
+    grid-area: card;
+  }
+  .arrow {
+    grid-area: arrow;
+  }
+}
+
+/* mobile: stacked */
+@media (max-width: 639px) {
+  .row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "num card" "title title" "line arrow";
+    padding: 28px 0;
+    min-height: 0;
+    column-gap: 16px;
+  }
+  .num {
+    margin-top: 0;
+    align-self: center;
+  }
+  .card,
+  .card svg {
+    width: 56px;
+    height: 56px;
+  }
+  .card {
+    justify-self: end;
+  }
+  .arrow {
+    opacity: 1;
+    transform: none;
+    align-self: end;
+  }
+}

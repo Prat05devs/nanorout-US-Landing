@@ -1,0 +1,60 @@
+.band {
+  position: relative;
+  z-index: 2;
+  height: 96px;
+  margin-top: 96px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.group {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+}
+.word {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 40px; /* caps 48px inside the 96px band */
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--white);
+  white-space: nowrap;
+  transition:
+    color 0.4s var(--ease-out),
+    -webkit-text-stroke-color 0.4s var(--ease-out),
+    text-shadow 0.4s var(--ease-out);
+}
+.plus {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  transition: transform 0.6s var(--ease-out);
+}
+.plus path {
+  stroke: var(--orange);
+  stroke-width: 1.5;
+}
+@media (hover: hover) {
+  .word:hover {
+    color: var(--acid);
+    -webkit-text-stroke-color: var(--acid);
+    text-shadow: 0 0 24px rgb(215 255 0 / 0.5);
+  }
+  .band:hover .plus {
+    transform: rotate(90deg);
+  }
+}
+@media (max-width: 639px) {
+  .word {
+    font-size: 28px;
+  }
+}

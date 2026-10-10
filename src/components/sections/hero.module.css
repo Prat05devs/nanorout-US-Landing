@@ -1,0 +1,188 @@
+.hero {
+  --route-h: clamp(160px, 24svh, 260px);
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + 32px);
+  --para-w: 600px;
+  padding-bottom: calc(var(--route-h) + 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: var(--plus-marks);
+  background-position: center top;
+  overflow: hidden;
+}
+
+/* the hot-orange sun: one disc, off-centre, with a soft heat halo */
+.sun {
+  position: absolute;
+  z-index: 0;
+  right: 3%;
+  top: 5%;
+  width: min(26vw, 380px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 120px 10px rgb(255 106 0 / 0.28);
+  pointer-events: none;
+}
+.neuron {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out);
+}
+.neuron canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.neuronOn {
+  opacity: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  /* a dark halo keeps small type legible where it crosses the chrome */
+  text-shadow: 0 0 14px var(--black), 0 0 4px var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+.path {
+  margin-bottom: 24px;
+}
+.home {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--acid);
+}
+
+.mask {
+  display: block;
+  /* clip only top and bottom, so the strikethrough can reach past the word */
+  clip-path: inset(-0.1em -12% -0.25em -12%);
+}
+.maskInner {
+  display: block;
+}
+
+.serif {
+  margin-bottom: 12px;
+}
+.strike {
+  position: relative;
+  display: inline-block;
+}
+.strikeWord {
+  display: inline-block;
+}
+.strikeLine {
+  position: absolute;
+  left: -4%;
+  width: 108%;
+  top: 56%;
+  height: 3px;
+  background: var(--acid);
+  box-shadow: var(--glow);
+  transform: rotate(-2deg) scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* "NANOTECH." is 7.04em wide in Boldonse: fill ~86% of the column, never taller than 11svh */
+.title {
+  text-shadow: none;
+  margin: 0;
+  white-space: nowrap;
+  font-size: min(calc((100vw - var(--side-w) - 2 * var(--gutter)) * 0.86 / 7.04), 11svh, 8.4rem);
+  line-height: 1.28;
+}
+.titleLine {
+  display: block;
+  overflow: hidden;
+  padding: 0.04em 0.1em 0.02em;
+}
+.titleInner {
+  display: block;
+}
+.char {
+  transition: color 0.2s;
+}
+/* the neon full stop */
+.neon {
+  --fg: var(--acid);
+  color: var(--acid);
+  text-shadow:
+    0 0 10px rgb(215 255 0 / 0.8),
+    0 0 34px rgb(215 255 0 / 0.45);
+}
+
+.tag {
+  margin-top: 28px;
+}
+.para {
+  max-width: var(--para-w);
+  margin-top: 24px;
+  text-wrap: balance;
+}
+.buttons,
+.tag {
+  text-shadow: none;
+}
+.buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+
+/* the route is drawn as an acid neon tube */
+.route {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--route-h);
+  --line: var(--acid);
+}
+.route svg {
+  filter: drop-shadow(0 0 3px rgb(215 255 0 / 0.55));
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-top: 72px;
+  }
+}
+@media (max-width: 899px) {
+  .sun {
+    right: -14vw;
+    top: 9%;
+    width: 58vw;
+  }
+}
+@media (max-width: 639px) {
+  .hero {
+    --route-h: 160px;
+  }
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+    align-self: stretch;
+  }
+  .buttons > * {
+    width: 100%;
+  }
+  .content {
+    width: 100%;
+  }
+}

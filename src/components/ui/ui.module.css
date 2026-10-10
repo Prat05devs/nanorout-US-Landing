@@ -1,0 +1,253 @@
+/* ---------- 5.3 Buttons ---------- */
+.btn {
+  --tone: var(--acid);
+  --ink: var(--black);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 28px;
+  border: 1.5px solid var(--tone);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.3s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--tone);
+  transition: transform 0.45s var(--ease-in-out);
+}
+.solid {
+  color: var(--ink);
+}
+.solid::before {
+  transform: scaleY(1);
+  transform-origin: 50% 0%;
+}
+.outline {
+  --tone: var(--white);
+  color: var(--white);
+}
+.outline::before {
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+}
+.tall {
+  height: 64px;
+}
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out);
+}
+/* a light glint sweeps across on hover */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -40%;
+  width: 30%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.5), transparent);
+  transform: skewX(-20deg) translateX(-120%);
+}
+
+@media (hover: hover) {
+  .solid:hover {
+    color: var(--tone);
+    box-shadow: 0 0 28px rgb(215 255 0 / 0.35);
+  }
+  .solid:hover::before {
+    transform: scaleY(0);
+  }
+  .outline:hover {
+    color: var(--ink);
+  }
+  .outline:hover::before {
+    transform: scaleY(1);
+  }
+  .btn:hover .arrow {
+    transform: translateX(6px);
+  }
+  .btn:hover::after {
+    animation: glint 0.9s var(--ease-out);
+  }
+}
+/* touch: the same change while pressed */
+.solid:active {
+  color: var(--tone);
+}
+.solid:active::before {
+  transform: scaleY(0);
+}
+.outline:active {
+  color: var(--ink);
+}
+.outline:active::before {
+  transform: scaleY(1);
+}
+
+@keyframes glint {
+  to {
+    transform: skewX(-20deg) translateX(560%);
+  }
+}
+
+/* on orange or white surfaces the button flips to black */
+.inkBtn {
+  --tone: var(--black);
+  --ink: var(--white);
+}
+
+/* ---------- 5.1 / 5.2 Tags ---------- */
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cell {
+  position: relative;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  margin-left: -1px;
+  margin-top: -1px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 50ms);
+}
+.cell:first-child {
+  margin-left: 0;
+}
+.cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--acid);
+  transform: translateY(101%);
+  transition: transform 0.35s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 50ms);
+}
+@media (hover: hover) {
+  .tags:hover .cell {
+    color: var(--black);
+  }
+  .tags:hover .cell::before {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- 5.4 Text link ---------- */
+.textLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+}
+.textLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform-origin: 0 50%;
+}
+.textLink .arrow {
+  color: var(--acid);
+}
+@media (hover: hover) {
+  .textLink:hover {
+    color: var(--acid);
+  }
+  .textLink:hover::after {
+    animation: redraw 0.4s var(--ease-in-out);
+  }
+  .textLink:hover .arrow {
+    transform: translateX(6px);
+  }
+}
+@keyframes redraw {
+  0% {
+    transform: scaleX(1);
+    transform-origin: 100% 50%;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+  }
+  46% {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: 0 50%;
+  }
+}
+
+/* ---------- logo ---------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+}
+.logo svg {
+  width: 28px;
+  height: 28px;
+}
+.logo :global(.dot) {
+  fill: var(--acid);
+  transition: filter 0.3s;
+}
+.word {
+  display: inline-flex;
+  overflow: hidden;
+}
+.word span {
+  display: inline-block;
+}
+@media (hover: hover) {
+  .logo:hover .word span {
+    animation: letterRoll 0.6s var(--ease-out) both;
+    animation-delay: calc(var(--i) * 30ms);
+  }
+  .logo:hover :global(.dot) {
+    filter: drop-shadow(0 0 4px var(--acid));
+  }
+}
+@keyframes letterRoll {
+  0% {
+    transform: translateY(0);
+  }
+  49% {
+    transform: translateY(-110%);
+  }
+  50% {
+    transform: translateY(110%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

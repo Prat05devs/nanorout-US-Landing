@@ -12,6 +12,7 @@ const boldonse = Boldonse({
   subsets: ["latin"],
   weight: "400",
   display: "swap",
+  adjustFontFallback: false, // Next ships no fallback metrics for Boldonse, so skip the adjusted fallback
   variable: "--font-boldonse",
 });
 
